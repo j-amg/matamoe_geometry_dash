@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://chi4i348t1tmy"]
+
+[ext_resource type="Texture2D" uid="uid://mroa477yf4o5" path="res://textures/icon.svg" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://cb1xr56kig0jm" path="res://player.gd" id="1_onrkg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iwtuo"]
+size = Vector2(32, 32)
+
+[sub_resource type="Animation" id="Animation_i3pqv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Icon:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_hqtel"]
+resource_name = "die"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.33333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Color(18.892157, 18.892157, 18.892157, 1), Color(18.892157, 18.892157, 18.892157, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_onrkg"]
+resource_name = "jump"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.39999998),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 3.141592653589793]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i3pqv"]
+_data = {
+&"RESET": SubResource("Animation_i3pqv"),
+&"die": SubResource("Animation_hqtel"),
+&"jump": SubResource("Animation_onrkg")
+}
+
+[node name="Player" type="CharacterBody2D" unique_id=774062663]
+floor_constant_speed = true
+script = ExtResource("1_onrkg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1554976538]
+shape = SubResource("RectangleShape2D_iwtuo")
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=613066303]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_4flbx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1783990162]
+libraries/ = SubResource("AnimationLibrary_i3pqv")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1245807255]
+position = Vector2(64, -32)
+zoom = Vector2(2, 2)
+limit_enabled = false
+drag_vertical_enabled = true
+drag_top_margin = 0.5
